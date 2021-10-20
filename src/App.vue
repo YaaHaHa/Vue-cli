@@ -1,23 +1,19 @@
 <template>
-<!-- 这里的Template标签依赖于 vue-template-compiler包，可以解析vue文件-->
-    <div>
-        <School />
-        <Student />
-    </div>
-  
+  <div>
+      <h1>行的端，坐得正！我是牛指导</h1>
+      <Jile name='赵铁柱' age='18' address='黑龙江-双鸭山'/>
+  </div>
 </template>
 
 <script>
-import School from './components/School'
-import Student from './components/Student'
-// 为什么用默认暴露？因为方便用
+import Jile from './components/Jile.vue'
 export default {
-		name:'App',
-		components:{
-			School,
-			Student
-		}
-	}
+    name:'App',
+    components:{
+        Jile
+    },
+    
+}
 </script>
 
 <style>
