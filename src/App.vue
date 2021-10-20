@@ -1,28 +1,25 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<!-- 这里的Template标签依赖于 vue-template-compiler包，可以解析vue文件-->
+    <div>
+        <School />
+        <Student />
+    </div>
+  
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import School from './components/School'
+import Student from './components/Student'
+// 为什么用默认暴露？因为方便用
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+		name:'App',
+		components:{
+			School,
+			Student
+		}
+	}
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>

@@ -2,9 +2,13 @@
 <html lang="">
   <head>
     <meta charset="utf-8">
+    <!-- 针对IE浏览器，让他用最高的版本渲染页面 -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 开启移动端理想视口 -->
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- webpack一个插件，去public文件夹中找文件，防止在服务器中找不到资源 -->
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <!-- 找到package中的name当标题 -->
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
