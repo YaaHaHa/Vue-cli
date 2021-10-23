@@ -8,39 +8,16 @@
        -->
        <!-- 2、在使用时利用隐式转换 -->
       <Jile name='赵铁柱' age='18' address="黑龙江-双鸭山"/>
-
-      <!-- 使用在main.js中use的插件生成的全局过滤器 -->
-      <h2>{{msg | mySlice}}</h2>
-      <button @click="show">打印App的vc</button>
-      <br>
-      <hr>
-      <input type="text" v-fbing:value='info'>
   </div>
 </template>
 
 <script>
 import Jile from './components/Jile.vue'
-// 引入minix.js
-// import {maxin} from './mixin'
 export default {
     name:'App',
     components:{
         Jile
     },
-    data() {
-        return {
-            msg:'带带大带带',
-            info:'1'
-        }
-    },
-    methods: {
-        show(){
-            console.log(this);
-            // 调用Vue原型对象上的方法
-            this.hello();
-        }
-    },
-
     
 }
 </script>

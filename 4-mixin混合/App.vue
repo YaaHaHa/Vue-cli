@@ -8,40 +8,40 @@
        -->
        <!-- 2、在使用时利用隐式转换 -->
       <Jile name='赵铁柱' age='18' address="黑龙江-双鸭山"/>
-
-      <!-- 使用在main.js中use的插件生成的全局过滤器 -->
-      <h2>{{msg | mySlice}}</h2>
       <button @click="show">打印App的vc</button>
-      <br>
-      <hr>
-      <input type="text" v-fbing:value='info'>
+      <h2>{{x}}</h2>
   </div>
 </template>
 
 <script>
 import Jile from './components/Jile.vue'
 // 引入minix.js
-// import {maxin} from './mixin'
+import {maxin} from './mixin'
 export default {
     name:'App',
-    components:{
-        Jile
-    },
     data() {
         return {
-            msg:'带带大带带',
-            info:'1'
+            // 如果混合和自带的属性冲突，听自己的，自己先导入，所以这里还拿不到this.x
+            Myx:this.x
         }
+    },
+    components:{
+        Jile
     },
     methods: {
         show(){
             console.log(this);
-            // 调用Vue原型对象上的方法
-            this.hello();
+            console.log('@'+this.x);
         }
     },
 
-    
+    // 这是局部混合
+    mixins:[maxin],
+
+    // 生命周期钩子不以任何人为主，但是混合的先执行？因为整个数据的导入执行，是maxin先过来
+    /* mounted() {
+        console.log("我是App.vue中的钩子");
+    }, */
 }
 </script>
 

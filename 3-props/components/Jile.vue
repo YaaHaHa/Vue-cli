@@ -18,6 +18,7 @@ export default {
     data() {
         return {
             comm:'寄了',
+            // props的数据是优先被接收的，然后存到vc里面，直接this.age就能拿
             myAge:this.age
         }
     },
