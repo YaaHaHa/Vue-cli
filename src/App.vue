@@ -1,50 +1,115 @@
 <template>
-  <div>
-      <h1>行的端，坐得正！我是牛指导</h1>
-      <!-- 如何让props传的不是字符串类型？ -->
-      <!-- 
-          1、巧用数据绑定。不加冒号18是字符串，加冒号后 等号后面的分号中按js语句处理 标签中age属性的值是数字18
-       <Jile name='赵铁柱' :age='18' /> 
-       -->
-       <!-- 2、在使用时利用隐式转换 -->
-      <Jile name='赵铁柱' age='18' address="黑龙江-双鸭山"/>
-
-      <!-- 使用在main.js中use的插件生成的全局过滤器 -->
-      <h2>{{msg | mySlice}}</h2>
-      <button @click="show">打印App的vc</button>
-      <br>
-      <hr>
-      <input type="text" v-fbing:value='info'>
+  <div id="root">
+  <div class="todo-container">
+    <div class="todo-wrap">
+        <MyHeader :addTodo='addTodo'/>
+        <MyList :todos='todos' :delTodo='delTodo'/>
+        <!-- 当todo长度为0时，隐藏Footer组件 -->
+        <MyFooter v-show='isRm' :todos='todos' :handCkeckedAll='handCkeckedAll' :clearAll='clearAll'/>
+    </div>
   </div>
+</div>
 </template>
 
 <script>
-import Jile from './components/Jile.vue'
-// 引入minix.js
-// import {maxin} from './mixin'
+import MyHeader from './components/MyHeader.vue'
+import MyList from './components/MyList.vue'
+import MyFooter from './components/MyFooter.vue'
 export default {
     name:'App',
-    components:{
-        Jile
-    },
+    // 因为跨不过组件之间的通信，所以这里把数据全放在APP中，方便通信
+    // 数据给MyList,交给他遍历渲染MyItem
     data() {
         return {
-            msg:'带带大带带',
-            info:'1'
+            todos:[
+                {id:'001',title:'学习',done:false},
+                {id:'002',title:'吃饭',done:false},
+                {id:'003',title:'睡觉',done:false}
+            ]
         }
     },
+    components:{
+        MyHeader,
+        MyList,
+        MyFooter
+    },
+    // 把方法拿给MyHeader使用
     methods: {
-        show(){
-            console.log(this);
-            // 调用Vue原型对象上的方法
-            this.hello();
+        addTodo(newtodo){
+            this.todos.unshift(newtodo);
+        },
+        delTodo(target){
+            this.todos = this.todos.filter((t)=>{
+              return t.id != target
+            })
+        },
+        // 全选/全不选。在MyFooter中操作todos
+        handCkeckedAll(flag){
+          // 拿到全选复选框的ckecked值，把todos所有的done都与他一致
+          this.todos =  this.todos.map((t)=>{
+            //函数体
+            return {...t,done:flag}
+          });
+        },
+        clearAll(){
+          this.todos = this.todos.filter((t)=>{
+            return t.done == false;
+          })
         }
     },
-
-    
+    computed:{
+      // 当todo长度为0时，隐藏Footer组件，为什么是计算属性？因为isRm依赖于todos，todos变了这里就会检查一次
+      isRm(){
+        return this.todos.length
+      }
+    }
 }
 </script>
 
 <style>
+/*base*/
+body {
+  background: #fff;
+}
+
+.btn {
+  display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #da4f49;
+  border: 1px solid #bd362f;
+}
+
+.btn-danger:hover {
+  color: #fff;
+  background-color: #bd362f;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.todo-container {
+  width: 600px;
+  margin: 0 auto;
+}
+.todo-container .todo-wrap {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+
 
 </style>

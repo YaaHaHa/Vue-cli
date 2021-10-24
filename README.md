@@ -6,3 +6,8 @@
 
 2. 因为vue.runtime.xxx.js没有模板解析器，所以不能使用template配置项，需要使用
     render函数接收到的createElement函数去指定具体内容。 
+
+
+
+#### Array.prototype.ruduce()
+`arr.reduce(callback(accumulator, currentValue[, index[, array]])[, initialValue])`

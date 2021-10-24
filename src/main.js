@@ -1,10 +1,7 @@
-import Vue from 'vue';
+import Vue from 'vue'
 import App from './App.vue'
+Vue.config.productionTip = false;
 
-import plugins from './plugins'
-
-Vue.use(plugins);
-Vue.config.productionTip = false
 new Vue({
     el:'#app',
     render: h => h(App)
