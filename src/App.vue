@@ -21,11 +21,8 @@ export default {
     // 数据给MyList,交给他遍历渲染MyItem
     data() {
         return {
-            todos:[
-                {id:'001',title:'学习',done:false},
-                {id:'002',title:'吃饭',done:false},
-                {id:'003',title:'睡觉',done:false}
-            ]
+          // 空数组，等用户自己添加，todos是要通过localStorage保存到本地的
+            todos:JSON.parse(localStorage.getItem('data')) || []
         }
     },
     components:{
@@ -62,7 +59,17 @@ export default {
       isRm(){
         return this.todos.length
       }
-    }
+    },
+    watch: {
+      todos:{
+        deep:true,
+        // value是新的值
+        handler(value){
+          // 一改变就被观察到，来到这里执行
+          localStorage.setItem('data',JSON.stringify(value));
+        }
+      }
+    },
 }
 </script>
 

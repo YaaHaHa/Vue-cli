@@ -37,3 +37,10 @@
          }
        }
 ```
+
+#### localStorage与sessionStorage方法都一样，就是声明存在的时间不同
+把todoList的todos通过这个保存到本地，同样两个重点。初始渲染与改变后的渲染。
+* 用到了watch属性，当todos改变，马上把最新的todos保存到本地。因为默认的是浅监视，对象中的属性改变不会被监视，但是todo的done要随着复选框一直在变，所以要开启深度监控。
+* data中的todos的初始值要从localStorage.getItem拿，因为保存的是json格式的，记得转换一下。
+    // 那本地保存的或空数组，等用户自己添加，todos是要通过localStorage保存到本地的
+            todos:JSON.parse(localStorage.getItem('data')) || []
