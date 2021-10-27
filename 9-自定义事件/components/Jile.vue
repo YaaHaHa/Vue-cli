@@ -9,10 +9,12 @@
           <li>{{age*1+1}}</li>
           <li>{{address}}</li>
       </ul>
+      <button @click='sent'>点我向App传数据</button>
   </div>
 </template>
 
 <script>
+
 export default {
     name:"Jile",
     data() {
@@ -21,6 +23,7 @@ export default {
             myAge:this.age
         }
     },
+    // mixins:[mixin],
     methods: {
         pingjia(){
             let rand = Math.round(Math.random());
@@ -30,33 +33,20 @@ export default {
         },
         showThis(){
             console.log(this);
-            // console.log(this._props);
+        },
+        sent(){
+            // 触发被绑定的pullName事件，传递this.name参数。要是没绑定没啥用
+            this.$emit('pullName',this.name,666,544,999);
+
+            // this.$emit('click',this.name);
         }
     },
-
-    // props的数据是优先被接收的，然后存到vc里面，直接this.name就能拿。而_data在后面，所以data里可以拿props的数据
-    // props数据谁传谁接？在App里传，Jile组件接
-    // props:['name','age','address']
+    /* mounted() {
+        this.$emit('pullName',this.name);
+    }, */
 
     props:{name:String,age:String,address:String}
-    /* props:{
-        name:{
-            // 接的时候必须是String
-            type: String,
-            require:true
-        },
-        age:{
-            // 接的时候必须是Number
-            type: String,
-            require:true,
-        },
-        address:{
 
-            type:String,
-            default:'中国'
-        }
-        
-    } */
 }
 </script>
 

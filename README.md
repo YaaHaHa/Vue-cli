@@ -44,3 +44,15 @@
 * data中的todos的初始值要从localStorage.getItem拿，因为保存的是json格式的，记得转换一下。
     // 那本地保存的或空数组，等用户自己添加，todos是要通过localStorage保存到本地的
             todos:JSON.parse(localStorage.getItem('data')) || []
+
+#### 自定义事件
+  1. 在标签中定义自定义事件并绑定上
+     1. <Jile v-on:pullName="getName" name='张三' age='18' address="阴曹地府"/> 直接绑定，pullName是事件名,getName是回调函数
+     2. <Jile ref="jile" name='张三' age='18' address="阴曹地府"/>用this.$refs.jile.on('pullName',this.getName/function() {}/ () => {})
+           1. 第二种方法如果指派的回调函数是这种直接写，而不是用this指派methods中的，那么函数中的this就指向被触发的那个组件实例对象。 Vue是这么规定的。
+           2. 为什么用this指派methods中的函数时，函数中的this是指向当前函数被声明的那个组件？其实按理说this也是指向被触发事件的那个组件，但是这个函数写在了methods里面，并且是普通函数，所以根据Vue的设置，methods中的函数中的this必指向当前组件的实例对象，所以说这里的this是因为methods的加持，指向了当前组件实例对象。
+           3. 其实用箭头函数也能指向当前实例对象。因为箭头函数没有自己的this，向外找，找到箭头函数被声明的地方。
+     3. 不管是哪种方式创建绑定的自定义事件，事件的回调和绑定都在创建自定义事件的地方。
+  2. 给自定义事件设置回调函数
+  3. 被绑定的元素触发事件，执行回调函数
+  4. 在给组件绑定事件，Vue会默认是自定义事件。加上.native修饰符确定是原生事件
