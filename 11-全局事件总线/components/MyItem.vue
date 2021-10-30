@@ -20,22 +20,18 @@
 </template>
 
 <script>
-import pubsub from 'pubsub-js'
 export default {
   name: "MyItem",
   props:['todo'],
   methods: {
       delTodoObj(id){
         if(!confirm('是否删除'+this.todo.title)) return;
-        // 用事件总线传递数据
-        //  this.$bus.$emit('delTodo',id);
-        // 用消息订阅发布机制传递数据
-        pubsub.publish('delTodo',id);
+         this.$bus.$emit('delTodo',id);
       }
   },
-  /* beforeDestroy() {
+  beforeDestroy() {
     this.$bus.$off('delTodo');
-  }, */
+  },
 };
 </script>
 
