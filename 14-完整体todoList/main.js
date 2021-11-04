@@ -4,7 +4,7 @@ import App from './App.vue'
 
 Vue.config.productionTip = false;
 
-const vm =new Vue({
+new Vue({
     el:'#app',
     render: h => h(App),
     // 创建全局事件总线

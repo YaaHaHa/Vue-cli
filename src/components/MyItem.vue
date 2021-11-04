@@ -1,45 +1,56 @@
 <template>
   <li>
     <label>
-      <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-        <!-- 这里利用v-model的数据双向绑定，input的checked和todo中的done绑定上了
-                为啥改变这里状态的同时会改变APP中的数据？因为数据是通过从props传过来的，这里改了，双向绑定，app中也就改了。
-                不推荐这种方法，因为Vue是不支持改props的，这里因为传过来的props是引用数据类型，所以可以改，如果props是基本数据类型改了就会报错
-         -->
-      <input type="checkbox" v-model='todo.done'/>
-      <span>{{todo.title}}</span>
+      <input type="checkbox" v-model="todo.done"/>
+      <span v-show="!todo.isEdit">{{ todo.title }}</span>
+      <input 
+      v-show="todo.isEdit" 
+      type="text" 
+      v-model="todo.title"
+      @blur="todoEdit(todo,$event)"
+      ref="inp"
+      >
     </label>
-    <!-- 加ref作用？打个标识，找到btn然后改样式。给button绑定一个和li一样的id，拿着这个id去删除 -->
-    <!-- <button class="btn btn-danger" style="display: none" ref='Del' @click='delTodoObj' :id='todo.id'>删除</button> -->
-
-
-    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-    <!-- 通过css的hover伪类实现鼠标悬浮显示 这边id直接拿，点击的时候把id就传过去了-->
-    <button class="btn btn-danger" @click='delTodoObj(todo.id)' :id='todo.id'>删除</button>
+    <button class="btn btn-danger" @click="handDel(todo.id)">删除</button>
+    <button class="btn btn-edit" @click="handEdi(todo)">修改</button>
   </li>
 </template>
 
 <script>
-import pubsub from 'pubsub-js'
 export default {
   name: "MyItem",
-  props:['todo'],
+  props: ["todo"],
   methods: {
-      delTodoObj(id){
-        if(!confirm('是否删除'+this.todo.title)) return;
-        // 用事件总线传递数据
-        //  this.$bus.$emit('delTodo',id);
-        // 用消息订阅发布机制传递数据
-        pubsub.publish('delTodo',id);
+    // 删除功能，拿到被删除的id给$bus触发，相当于把数据传到App叫他处理
+    handDel(id) {
+      if (confirm(`是否删除${this.todo.title}`)) {
+        this.$bus.$emit("delTodo", id);
       }
+    },
+    handEdi(todo){
+      if(todo.hasOwnProperty('isEdit'))
+      {
+        todo.isEdit=true;
+      } else{
+        this.$set(todo,'isEdit',true);
+        console.log('添加了isEdit');
+      }
+      this.$nextTick(function(){
+					this.$refs.inp.focus();
+				})
+    },
+    // 修改todo
+    todoEdit(todo,e){
+      let oldTit = todo.title;
+      this.$emit('editTodo',todo.id,e.target.value);
+      todo.isEdit=false;
+      console.log(`${oldTit}  成功修改成  ${todo.title}`);
+    }
   },
-  /* beforeDestroy() {
-    this.$bus.$off('delTodo');
-  }, */
 };
 </script>
 
-<style>
+<style scoped>
 /*item*/
 li {
   list-style: none;
@@ -67,17 +78,18 @@ li button {
   margin-top: 3px;
 }
 
+li:hover {
+  background-color: #ddd;
+}
+
+li:hover button {
+  display: block;
+}
 li:before {
   content: initial;
 }
 
 li:last-child {
   border-bottom: none;
-}
-li:hover{
-  background-color: #ddd;
-}
-li:hover button{
-  display: block;
 }
 </style>

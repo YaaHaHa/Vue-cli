@@ -1,23 +1,12 @@
 <template>
   <ul class="todo-main">
-    <transition-group 
-    name="animate__animated animate__bounce"
-    enter-active-class="animate__bounceIn"
-    leave-active-class="animate__bounceOut"
-    >
-      <!--                  :todo='todoObj'给每一个MyItem传一个他自己所属的todoObj                               -->
-      <MyItem 
-        v-for="todoObj in todos" 
-        :key='todoObj.id' 
-        :todo='todoObj'
-        />
-    </transition-group>
+    <!--                  :todo='todoObj'给每一个MyItem传一个他自己所属的todoObj                               -->
+    <MyItem v-for="todoObj in todos" :key='todoObj.id' :todo='todoObj'/>
   </ul>
 </template>
 
 <script>
 import MyItem from './MyItem.vue'
-import "animate.css"
 export default {
   name:'MyList',
   components:{
