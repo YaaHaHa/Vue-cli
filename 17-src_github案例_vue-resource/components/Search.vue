@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+
 export default {
     name:'Search',
     data() {
@@ -26,7 +26,7 @@ export default {
         getUsers(){
             // 进入这里，说明肯定已经点了搜索，加载中替换欢迎界面
             this.$bus.$emit('saveUsers',{isFirst:false, isLoading:true,})
-            axios.get(`https://api.github.com/search/users?q=${this.msg}`).then(
+            this.$http.get(`https://api.github.com/search/users?q=${this.msg}`).then(
                 response => {
                     console.log(response.data.items);
                     this.$bus.$emit('saveUsers',{isLoading:false, errMsg:'', Users:response.data.items})
@@ -35,6 +35,7 @@ export default {
                     this.$bus.$emit('saveUsers',{isLoading:false, errMsg:error.message, Users:[]});
                 }
             )
+            console.log(this);
         }
     },
 }
