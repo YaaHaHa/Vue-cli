@@ -6,15 +6,17 @@
               {{p.name}}---{{p.age}}
           </li>
       </ul>
+      <h2>列表中第一个人是：{{firstName}}</h2>
       <!-- 添加新人，双向绑定收集数据 -->
       <input type="text" placeholder="输入姓名" v-model="person">
       <button @click="add">添加</button>
+      <button @click="addwang">添加姓王的</button>
   </div>
 </template>
 
 <script>
 import {nanoid} from 'nanoid'
-import {mapState} from 'vuex'
+import {mapState,mapGetters} from 'vuex'
 export default {
     name:'Person',
     data() {
@@ -26,17 +28,32 @@ export default {
         // 映射vuex中personAbout模块保存的state
         ...mapState('personAbout',['list']),
         // 映射vuex中countAbout模块保存的stata
-        ...mapState('countAbout',['sum'])
+        ...mapState('countAbout',['sum']),
+
+        // 映射person模块的getter
+        // ...mapGetters('personAbout',['firstName'])
+        firstName(){
+            return this.$store.getters['personAbout/firstName'];
+        }
     },
     methods: {
-        // 添加新人，向personAbout模块的mutations
+        // 添加新人，向personAbout模块的mutations联系
         add(){
             this.$store.commit('personAbout/ADD_PERSON',{
                 id:nanoid(),
                 name:this.person,
             });
             this.person='';
+        },
+        addwang(){
+            this.$store.dispatch('personAbout/addwang',{
+                id:nanoid(),
+                name:this.person
+            })
         }
+    },
+    mounted() {
+        console.log(this.$store)
     },
 }
 </script>
