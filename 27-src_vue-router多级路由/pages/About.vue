@@ -11,12 +11,12 @@
 <script>
 export default {
   name: "About",
-  mounted(){
+  /* mounted(){
     console.log('About挂载后的route',this.$route);
   },
   beforeDestroy() {
     console.log('About要被销毁了');
-  },
+  }, */
 };
 </script>
 

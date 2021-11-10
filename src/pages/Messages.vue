@@ -1,0 +1,30 @@
+<template>
+  <div>
+    <ul>
+      <li v-for="m of list" :key="m.id">
+        <!-- 这里利用v-bind解析""中的js语句，外面的那层引号不能少" -->
+        <router-link :to="`/home/messages/details?id=${m.id}&title=${m.title}`">message001</router-link
+        >&nbsp;&nbsp;
+      </li>
+    </ul>
+    <router-view></router-view>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Messages",
+  data() {
+      return {
+        list:[
+          {id:'001',title:'消息001'},
+          {id:'002',title:'消息002'},
+          {id:'003',title:'消息003'},
+        ]
+      }
+    },
+};
+</script>
+
+<style>
+</style>

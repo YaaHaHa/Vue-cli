@@ -8,7 +8,6 @@ import Home from '../pages/Home.vue'
 import About from '../pages/About.vue'
 import News from '../pages/News.vue'
 import Messages from '../pages/Messages.vue'
-import Details from '../pages/Details.vue'
 
 // 创建并暴露一个路由器
 export default new VueRouter({
@@ -24,13 +23,7 @@ export default new VueRouter({
                 },
                 {
                     path:'messages',
-                    component:Messages,
-                    children:[
-                        {
-                            path:'details',
-                            component:Details
-                        }
-                    ]
+                    component:Messages
                 }
             ]
         },
