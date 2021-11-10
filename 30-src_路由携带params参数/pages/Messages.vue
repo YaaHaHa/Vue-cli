@@ -9,7 +9,7 @@
         <!-- params参数形式的传参必须用命名路由，不然报错 -->
         <router-link :to="{
           name:'xiangqing',
-          query:{
+          params:{
             id:m.id,
             title:m.title
           }
