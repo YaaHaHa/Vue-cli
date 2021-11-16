@@ -57,6 +57,5 @@ export default new VueRouter({
             path:'/about',
             component:About
         }
-    ],
-    
+    ]
 })

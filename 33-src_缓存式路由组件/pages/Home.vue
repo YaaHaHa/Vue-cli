@@ -41,15 +41,12 @@
 <script>
 export default {
   name: "Home",
-  // 挂载后执行钩子
-  mounted(){
+  /* mounted(){
     console.log('Home挂载后的route',this.$route);
   },
-  // 被销毁前执行钩子
   beforeDestroy() {
     console.log('Home要被销毁了');
-  },
-
+  }, */
 };
 </script>
 
