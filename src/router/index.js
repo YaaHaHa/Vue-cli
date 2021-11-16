@@ -11,20 +11,42 @@ import Messages from '../pages/Messages.vue'
 import Details from '../pages/Details.vue'
 
 // 创建并暴露一个路由器
-export default new VueRouter({
+const router =  new VueRouter({
     // 因为路由是一对一对的key-value值，所以下的的书写格式是这种形式的
     routes:[
         {
             path:'/home',
             component:Home,
+            // meta属性中的内容可被路由守卫拿到
+            meta:{title:'主页'},
             children:[
                 {
                     path:'news',
-                    component:News
+                    component:News,
+                    meta:{isAuth:true,title:'新闻'},
+                    // 独享路由守卫只有前置！！！没有后置
+                    beforeEnter:(to, from, next) => {
+                        // console.log('独享路由守卫',to,from);
+                            // 是否需要身份验证
+                        if(to.meta.isAuth){
+                            // 判断来者是不是正确的
+                            /* if(from.path !== '/Home'){
+                                next();
+                            } */
+                            if(localStorage.getItem('school') !== 'jialidun'){
+                                alert('权限不允许访问');
+                            } else{
+                                next();
+                            }
+                        }else{
+                            next()
+                        }
+                    }
                 },
                 {
                     path:'messages',
                     component:Messages,
+                    meta:{isAuth:true,title:'讯息'},
                     // param参数要提前占位，不然谁知道哪里是路径哪里是参数
                     children:[
                         {   
@@ -55,8 +77,35 @@ export default new VueRouter({
         },
         {
             path:'/about',
-            component:About
+            component:About,
+            meta:{isAuth:true,title:'相关'}
         }
-    ],
-    
+    ]
 })
+//全局前置路由守卫————初始化的时候被调用、每次路由切换之前被调用
+//  前置路由守卫  路径请求从当前哪里来？要到哪里去？要不要放行
+router.beforeEach((to,from,next)=>{
+    // console.log('全局前置路由守卫',to,from);
+    // 是否需要身份验证
+  if(to.meta.isAuth){
+    // 判断来者是不是正确的
+    /* if(from.path !== '/Home'){
+        next();
+    } */
+    if(localStorage.getItem('school') !== 'jialidun'){
+        alert('权限不允许访问!')
+    } else{
+        next();
+    }
+  }else{
+    next()
+  }
+})
+
+// 全局后置路由守卫------初始化的时候被调用，每次路由切换之后被调用
+// 应用场景：切换路由后，比如对标题进行更换
+router.afterEach((to,from)=>{
+//   console.log('全局后置路由守卫',to,from);
+  document.title = to.meta.title || '带带大系统'
+})
+export default router;
