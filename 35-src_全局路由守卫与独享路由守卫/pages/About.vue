@@ -11,10 +11,12 @@
 <script>
 export default {
   name: "About",
-  // 组件内路由守卫   不同于写在路由中的，这是写在组件中的
-  beforeEnter: (to, from, next) => {
-    console.log('组件内路由守卫');
-  }
+  /* mounted(){
+    console.log('About挂载后的route',this.$route);
+  },
+  beforeDestroy() {
+    console.log('About要被销毁了');
+  }, */
 };
 </script>
 

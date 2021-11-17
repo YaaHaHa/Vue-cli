@@ -12,11 +12,6 @@ import Details from '../pages/Details.vue'
 
 // 创建并暴露一个路由器
 const router =  new VueRouter({
-    // history模式，浏览器上面的路径不带/#
-    mode:'history',
-
-    // hash模式，浏览器上路径/#以后的都只在前端路由中使用，不会向服务器发送请求
-    // mode:'hash', 
     // 因为路由是一对一对的key-value值，所以下的的书写格式是这种形式的
     routes:[
         {
